@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>铁路订票系统 - 首页</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: #1a56db;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .top-bar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        .user-menu {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .user-menu a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+        }
+        
+        .user-menu a:hover {
+            opacity: 0.8;
+        }
+        
+        /* 导航栏 */
+        nav {
+            background-color: white;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            position: relative;
+        }
+        
+        .nav-links a {
+            display: block;
+            padding: 15px 20px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background-color: #f0f5ff;
+            color: #1a56db;
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #1a56db;
+        }
+        
+        /* 主横幅 */
+        .hero {
+            background: linear-gradient(rgba(26, 86, 219, 0.8), rgba(26, 86, 219, 0.8)), url('https://picsum.photos/id/1031/1920/500') center/cover no-repeat;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        
+        /* 订票表单 */
+        .booking-form {
+            background-color: white;
+            max-width: 1200px;
+            margin: -40px auto 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        .form-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-tab {
+            padding: 10px 20px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .form-tab.active {
+            color: #1a56db;
+            border-bottom-color: #1a56db;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            border-color: #1a56db;
+            outline: none;
+        }
+        
+        .icon-input {
+            position: relative;
+        }
+        
+        .icon-input i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .swap-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ddd;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1;
+            color: #1a56db;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .search-btn {
+            background-color: #1a56db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 0;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .search-btn:hover {
+            background-color: #0f46b8;
+        }
+        
+        /* 主要内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 特价车票区 */
+        .section-title {
+            font-size: 1.8rem;
+            margin: 40px 0 25px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #1a56db;
+        }
+        
+        .special-offers {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .offer-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        
+        .offer-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .offer-image {
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .offer-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .offer-card:hover .offer-image img {
+            transform: scale(1.05);
+        }
+        
+        .offer-details {
+            padding: 20px;
+        }
+        
+        .route {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .city {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .route i {
+            color: #1a56db;
+            margin: 0 10px;
+        }
+        
+        .offer-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .price {
+            color: #e53e3e;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .price span {
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+        
+        .offer-btn {
+            background-color: #1a56db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .offer-btn:hover {
+            background-color: #0f46b8;
+        }
+        
+        /* 热门目的地 */
+        .popular-destinations {
+            margin-bottom: 50px;
+        }
+        
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .destination-card {
+            position: relative;
+            height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .destination-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .destination-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .destination-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 15px 10px 10px;
+            font-weight: 600;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #1e293b;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: #1a56db;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: #1a56db;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .swap-btn {
+                top: 100px;
+                left: 50%;
+            }
+            
+            .special-offers, .destinations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="top-bar">
+            <div class="logo">
+                <img src="https://picsum.photos/id/237/40/40" alt="铁路订票系统logo">
+                <span>铁路订票系统</span>
+            </div>
+            <div class="user-menu">
+                <a href="#"><i class="fas fa-user"></i> 登录</a>
+                <a href="#"><i class="fas fa-user-plus"></i> 注册</a>
+                <a href="order.html"><i class="fas fa-history"></i> 订单查询</a>
+                <a href="help.html"><i class="fas fa-question-circle"></i> 帮助中心</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">首页</a></li>
+                <li><a href="booking.html">车票预订</a></li>
+                <li><a href="stations.html">车站信息</a></li>
+                <li><a href="#">列车时刻表</a></li>
+                <li><a href="#">改签退票</a></li>
+                <li><a href="#">会员服务</a></li>
+                <li><a href="#">旅游服务</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- 主横幅 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>便捷出行，从这里开始</h1>
+            <p>提供全国铁路车票预订服务，让您的旅程更加舒适便捷</p>
+        </div>
+    </section>
+    
+    <!-- 订票表单 -->
+    <section class="booking-form">
+        <div class="form-tabs">
+            <div class="form-tab active">单程</div>
+            <div class="form-tab">往返</div>
+            <div class="form-tab">接续换乘</div>
+        </div>
+        
+        <div class="form-grid">
+            <div class="form-group">
+                <label>出发站</label>
+                <div class="icon-input">
+                    <input type="text" placeholder="请输入出发站" value="北京">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+            </div>
+            
+            <div class="form-group" style="position: relative;">
+                <div class="swap-btn">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>到达站</label>
+                <div class="icon-input">
+                    <input type="text" placeholder="请输入到达站" value="上海">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>出发日期</label>
+                <div class="icon-input">
+                    <input type="date" value="2023-11-15">
+                    <i class="fas fa-calendar"></i>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>乘客类型</label>
+                <select>
+                    <option>成人</option>
+                    <option>学生</option>
+                    <option>儿童</option>
+                    <option>军人</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <button class="search-btn" onclick="window.location.href='booking.html'">
+                    <i class="fas fa-search"></i> 查询车票
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 主要内容区 -->
+    <div class="container">
+        <!-- 特价车票 -->
+        <h2 class="section-title"><i class="fas fa-train"></i> 特价车票</h2>
+        <div class="special-offers">
+            <div class="offer-card">
+                <div class="offer-image">
+                    <img src="https://picsum.photos/id/1016/600/400" alt="北京到上海高铁">
+                </div>
+                <div class="offer-details">
+                    <div class="route">
+                        <div class="city">北京</div>
+                        <i class="fas fa-arrow-right"></i>
+                        <div class="city">上海</div>
+                    </div>
+                    <p>11月18日 · G101次 · 08:00-13:20</p>
+                    <div class="offer-info">
+                        <div class="price">¥498 <span>起</span></div>
+                        <button class="offer-btn" onclick="window.location.href='booking.html'">立即预订</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="offer-card">
+                <div class="offer-image">
+                    <img src="https://picsum.photos/id/1018/600/400" alt="广州到深圳高铁">
+                </div>
+                <div class="offer-details">
+                    <div class="route">
+                        <div class="city">广州</div>
+                        <i class="fas fa-arrow-right"></i>
+                        <div class="city">深圳</div>
+                    </div>
+                    <p>11月16日 · G6201次 · 10:30-11:45</p>
+                    <div class="offer-info">
+                        <div class="price">¥79 <span>起</span></div>
+                        <button class="offer-btn" onclick="window.location.href='booking.html'">立即预订</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="offer-card">
+                <div class="offer-image">
+                    <img src="https://picsum.photos/id/1019/600/400" alt="成都到重庆高铁">
+                </div>
+                <div class="offer-details">
+                    <div class="route">
+                        <div class="city">成都</div>
+                        <i class="fas fa-arrow-right"></i>
+                        <div class="city">重庆</div>
+                    </div>
+                    <p>11月20日 · G8501次 · 14:15-15:40</p>
+                    <div class="offer-info">
+                        <div class="price">¥154 <span>起</span></div>
+                        <button class="offer-btn" onclick="window.location.href='booking.html'">立即预订</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 热门目的地 -->
+        <h2 class="section-title"><i class="fas fa-map-marked-alt"></i> 热门目的地</h2>
+        <div class="popular-destinations">
+            <div class="destinations-grid">
+                <div class="destination-card">
+                    <img src="https://picsum.photos/id/1036/400/300" alt="北京">
+                    <div class="destination-name">北京</div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://picsum.photos/id/1037/400/300" alt="上海">
+                    <div class="destination-name">上海</div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://picsum.photos/id/1038/400/300" alt="广州">
+                    <div class="destination-name">广州</div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://picsum.photos/id/1039/400/300" alt="深圳">
+                    <div class="destination-name">深圳</div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://picsum.photos/id/1040/400/300" alt="成都">
+                    <div class="destination-name">成都</div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://picsum.photos/id/1041/400/300" alt="杭州">
+                    <div class="destination-name">杭州</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>关于我们</h3>
+                <ul>
+                    <li><a href="#">公司简介</a></li>
+                    <li><a href="#">新闻动态</a></li>
+                    <li><a href="#">招贤纳士</a></li>
+                    <li><a href="#">联系我们</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>客户服务</h3>
+                <ul>
+                    <li><a href="help.html">常见问题</a></li>
+                    <li><a href="#">用户指南</a></li>
+                    <li><a href="#">投诉建议</a></li>
+                    <li><a href="#">服务条款</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>支付方式</h3>
+                <ul>
+                    <li><a href="#">在线支付</a></li>
+                    <li><a href="#">银行转账</a></li>
+                    <li><a href="#">支付宝</a></li>
+                    <li><a href="#">微信支付</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>联系方式</h3>
+                <div class="contact-info">
+                    <i class="fas fa-phone"></i>
+                    <span>客服热线：12306</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-envelope"></i>
+                    <span>service@railway.com</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>北京市海淀区XX大厦</span>
+                </div>
+                
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-qq"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2023 铁路订票系统 版权所有 | 京ICP备12345678号</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 表单标签切换
+            const formTabs = document.querySelectorAll('.form-tab');
+            formTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    formTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // 出发站和到达站交换
+            const swapBtn = document.querySelector('.swap-btn');
+            const fromStation = document.querySelector('input[placeholder="请输入出发站"]');
+            const toStation = document.querySelector('input[placeholder="请输入到达站"]');
+            
+            swapBtn.addEventListener('click', function() {
+                const temp = fromStation.value;
+                fromStation.value = toStation.value;
+                toStation.value = temp;
+            });
+            
+            // 目的地卡片点击效果
+            const destinationCards = document.querySelectorAll('.destination-card');
+            destinationCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const cityName = this.querySelector('.destination-name').textContent;
+                    toStation.value = cityName;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+    
