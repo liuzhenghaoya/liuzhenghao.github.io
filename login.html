@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>铁路订票系统 - 登录</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: #1a56db;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .top-bar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        /* 登录容器 */
+        .auth-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        
+        .auth-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+        }
+        
+        .auth-tabs {
+            display: flex;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            background-color: white;
+            color: #1a56db;
+            border-bottom: 3px solid #1a56db;
+        }
+        
+        .auth-content {
+            padding: 30px;
+        }
+        
+        .form-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #1a56db;
+            outline: none;
+        }
+        
+        .icon-input {
+            position: relative;
+        }
+        
+        .icon-input i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+        
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .form-link {
+            color: #1a56db;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: opacity 0.3s;
+        }
+        
+        .form-link:hover {
+            opacity: 0.8;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background-color: #1a56db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0f46b8;
+        }
+        
+        .btn-secondary {
+            background-color: #f1f5f9;
+            color: #333;
+            margin-top: 15px;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e2e8f0;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #eee;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .wechat {
+            background-color: #07c160;
+        }
+        
+        .alipay {
+            background-color: #1677ff;
+        }
+        
+        .qq {
+            background-color: #12b7f5;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #1e293b;
+            color: white;
+            padding: 30px 0 20px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .copyright {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+        
+        /* 错误提示 */
+        .error-message {
+            color: #dc2626;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="top-bar">
+            <div class="logo">
+                <img src="https://picsum.photos/id/237/40/40" alt="铁路订票系统logo">
+                <span>铁路订票系统</span>
+            </div>
+        </div>
+    </header>
+    
+    <!-- 登录注册容器 -->
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="login-tab">登录</div>
+                <div class="auth-tab" id="register-tab">注册</div>
+            </div>
+            
+            <!-- 登录表单 -->
+            <div class="auth-content" id="login-content">
+                <h2 class="form-title">账户登录</h2>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-username">用户名/手机号</label>
+                        <div class="icon-input">
+                            <input type="text" id="login-username" class="form-control" placeholder="请输入用户名或手机号">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="error-message" id="login-username-error">请输入用户名或手机号</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">密码</label>
+                        <div class="icon-input">
+                            <input type="password" id="login-password" class="form-control" placeholder="请输入密码">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="error-message" id="login-password-error">请输入密码</div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <label class="form-check">
+                            <input type="checkbox"> 记住我
+                        </label>
+                        <a href="#" class="form-link">忘记密码?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">登录</button>
+                    <a href="#" class="btn btn-secondary" id="show-register">注册新账户</a>
+                    
+                    <div class="divider">其他登录方式</div>
+                    
+                    <div class="social-login">
+                        <a href="#" class="social-btn wechat"><i class="fab fa-weixin"></i></a>
+                        <a href="#" class="social-btn alipay"><i class="fab fa-alipay"></i></a>
+                        <a href="#" class="social-btn qq"><i class="fab fa-qq"></i></a>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- 注册表单 -->
+            <div class="auth-content" id="register-content" style="display: none;">
+                <h2 class="form-title">用户注册</h2>
+                
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-phone">手机号</label>
+                        <div class="icon-input">
+                            <input type="tel" id="register-phone" class="form-control" placeholder="请输入手机号">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="error-message" id="register-phone-error">请输入正确的手机号</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-code">验证码</label>
+                        <div style="display: flex; gap: 10px;">
+                            <div class="icon-input" style="flex: 1;">
+                                <input type="text" id="register-code" class="form-control" placeholder="请输入验证码">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <button type="button" class="btn btn-secondary" style="width: auto; padding: 0 15px;">获取验证码</button>
+                        </div>
+                        <div class="error-message" id="register-code-error">请输入验证码</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-password">设置密码</label>
+                        <div class="icon-input">
+                            <input type="password" id="register-password" class="form-control" placeholder="请设置密码">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="error-message" id="register-password-error">密码长度不能少于6位</div>
+                    </div>
+                    
+                    <div class="form-check" style="margin-bottom: 25px;">
+                        <input type="checkbox" id="agree-terms">
+                        <label for="agree-terms">我已阅读并同意<a href="#" class="form-link">《用户服务协议》</a>和<a href="#" class="form-link">《隐私政策》</a></label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">注册</button>
+                    <a href="#" class="btn btn-secondary" id="show-login">已有账户? 登录</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+            <div class="copyright">
+                <p>© 2023 铁路订票系统 版权所有 | 京ICP备12345678号</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 页面加载时检查是否已登录
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                window.location.href = 'index.html';
+            }
+            
+            // 切换登录/注册表单
+            const loginTab = document.getElementById('login-tab');
+            const registerTab = document.getElementById('register-tab');
+            const loginContent = document.getElementById('login-content');
+            const registerContent = document.getElementById('register-content');
+            const showRegister = document.getElementById('show-register');
+            const showLogin = document.getElementById('show-login');
+            
+            loginTab.addEventListener('click', function() {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginContent.style.display = 'block';
+                registerContent.style.display = 'none';
+            });
+            
+            registerTab.addEventListener('click', function() {
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                registerContent.style.display = 'block';
+                loginContent.style.display = 'none';
+            });
+            
+            showRegister.addEventListener('click', function(e) {
+                e.preventDefault();
+                registerTab.click();
+            });
+            
+            showLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginTab.click();
+            });
+            
+            // 登录表单提交
+            const loginForm = document.getElementById('login-form');
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('login-username').value.trim();
+                const password = document.getElementById('login-password').value;
+                let isValid = true;
+                
+                // 简单验证
+                if (!username) {
+                    document.getElementById('login-username-error').classList.add('show');
+                    isValid = false;
+                } else {
+                    document.getElementById('login-username-error').classList.remove('show');
+                }
+                
+                if (!password) {
+                    document.getElementById('login-password-error').classList.add('show');
+                    isValid = false;
+                } else {
+                    document.getElementById('login-password-error').classList.remove('show');
+                }
+                
+                // 验证通过，模拟登录
+                if (isValid) {
+                    // 在实际应用中，这里应该发送请求到服务器验证
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('username', username);
+                    
+                    // 跳转到首页
+                    window.location.href = 'index.html';
+                }
+            });
+            
+            // 注册表单提交
+            const registerForm = document.getElementById('register-form');
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const phone = document.getElementById('register-phone').value.trim();
+                const code = document.getElementById('register-code').value.trim();
+                const password = document.getElementById('register-password').value;
+                const agreeTerms = document.getElementById('agree-terms').checked;
+                let isValid = true;
+                
+                // 简单验证
+                if (!phone || phone.length !== 11) {
+                    document.getElementById('register-phone-error').classList.add('show');
+                    isValid = false;
+                } else {
+                    document.getElementById('register-phone-error').classList.remove('show');
+                }
+                
+                if (!code || code.length !== 6) {
+                    document.getElementById('register-code-error').classList.add('show');
+                    isValid = false;
+                } else {
+                    document.getElementById('register-code-error').classList.remove('show');
+                }
+                
+                if (!password || password.length < 6) {
+                    document.getElementById('register-password-error').classList.add('show');
+                    isValid = false;
+                } else {
+                    document.getElementById('register-password-error').classList.remove('show');
+                }
+                
+                if (!agreeTerms) {
+                    alert('请阅读并同意用户服务协议和隐私政策');
+                    isValid = false;
+                }
+                
+                // 验证通过，模拟注册
+                if (isValid) {
+                    // 在实际应用中，这里应该发送请求到服务器注册
+                    alert('注册成功，请登录');
+                    loginTab.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
